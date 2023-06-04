@@ -1,0 +1,32 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container" id="row-container">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md-6">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Create Account</h4>
+                    <p class="card-text paragraph-custom">
+                        If you don't have an account, you can create one by clicking Sign up.
+                    </p>
+                    <!-- <a class="btn btn-primary btn-submit-custom" href="/students">Show</a> -->
+                    <a class="btn btn-primary btn-submit-custom" href="/signup">Sign up</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Log in</h4>
+                    <p class="card-text">
+                        Already have an account? Log in!
+                    </p>
+                    <!-- <a class="btn btn-primary btn-submit-custom" href="/grades">Show</a> -->
+                    <a class="btn btn-primary btn-submit-custom" href="/login">Log in</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

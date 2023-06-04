@@ -1,0 +1,50 @@
+<nav class="navbar navbar-light navbar-expand-md" id="nav-bar">
+    <div id="navbar-div" class="container-fluid">
+        <a class="navbar-brand" id="nav-bar-text">School Libraries Network - {{ pageTitle }}</a>
+        <div class="navbar-nav ml-auto">
+            {% if condition == "landing" %}
+                <a id="navbar-items" href="/">
+                    <i class="fa fa-home"></i> {{ home_name }}
+                </a>
+            {% elif condition == "student" %}
+                <a id="navbar-items" href="/user/home_page">
+                    <i class="fa fa-home"></i> <span style="padding-right: 20px;">{{ home_name }}</span>
+                </a>
+                <a id="logout-button" href="/">
+                    <i class="fa fa-sign-out"></i> Logout
+                </a>
+            {% elif condition == "professor" %}
+                <a id="navbar-items" href="/user/home_page">
+                    <i class="fa fa-home"></i> <span style="padding-right: 20px;">{{ home_name }}</span>
+                </a>
+                <a id="logout-button" href="/">
+                    <i class="fa fa-sign-out"></i> Logout
+                </a>
+            {% elif condition == "operator" %}
+                <a id="navbar-items" href="/operator_page">
+                    <i class="fa fa-home"></i> <span style="padding-right: 20px;">{{ home_name }}</span>
+                </a>
+                <a id="logout-button" href="/">
+                    <i class="fa fa-sign-out"></i> Logout
+                </a>
+            {% elif condition == "admin" %}
+                <a id="navbar-items" href="/admin_page">
+                    <i class="fa fa-home"></i> <span style="padding-right: 20px;">{{ home_name }}</span>
+                </a>
+                <a id="logout-button" href="/">
+                    <i class="fa fa-sign-out"></i> Logout
+                </a>
+            {% else %}
+                <a id="navbar-items" href="/">
+                    <i class="fa fa-home"></i> {{ home_name }}
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+<style>
+    #logout-button {
+        color: white;
+    }
+</style>

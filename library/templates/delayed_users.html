@@ -1,0 +1,54 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <div class="card" id="card-container">
+                <div class="card-body" id="card">
+                    <div class="row mb-3">
+                        <div class="col-md-9">
+                            <form action="/borrowings/users/delayed/search" method="GET">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="search" placeholder="Search User's First and/or Last Name, Delay Days">
+                                    <button type="submit" class="btn btn-primary">Search</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                {% if delays|length == 0 %}
+                    <!-- |length is a jinja2 filter that returns the amount of items in a sequence -->
+                    <h1 style="margin-top: 5rem;">No Users found!</h1>
+                {% else %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Copy ID</th>
+                                    <th>Delay Days</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for delay in delays %}
+                                    <tr>
+                                        <td> {{ delay.first_name}} </td>
+                                        <td> {{ delay.last_name}} </td>
+                                        <td> {{ delay.copy_id}} </td>
+                                        <td> {{ delay.total_delay_days }} </td>
+                                        <td></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

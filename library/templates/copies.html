@@ -1,0 +1,59 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <div class="card" id="card-container">
+                <div class="card-body" id="card">
+                {% if copies|length == 0 %}
+                    <!-- |length is a jinja2 filter that returns the amount of items in a sequence -->
+                    <h1 style="margin-top: 5rem;">No Copies found!</h1>
+                {% else %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Available to Reserve</th>
+                                    <th>Available to Borrow</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for copy in copies %}
+                                    <tr>
+                                        <td> {{ copy.copy_id}} </td>
+                                        <td> {{ copy.reservation_availability }} </td>
+                                        <td> {{ copy.borrowing_availability }} </td>
+                                        <td>
+                                        {% if condition1 == "operator" %}
+                                            <div class="d-flex">
+                                            <form action="/copies/delete" method="POST"  class="mr-2">
+                                                <input type="hidden" name="copy_id" value="{{ copy.copy_id  }}">
+                                                <button type="submit" class="btn btn-secondary">Delete</button>
+                                            </form>
+                                            <form action="/reserve_copy" method="POST">
+                                                <input type="hidden" name="copy_id" value="{{ copy.copy_id }}">
+                                                <button type="submit" class="btn btn-primary" style="margin-left: 5px;">Reserve</button>
+                                            </form>
+                                        {% else %}
+                                            <form action="/reserve_copy" method="POST">
+                                                <input type="hidden" name="copy_id" value="{{ copy.copy_id }}">
+                                                <button type="submit" class="btn btn-primary" >Reserve</button>
+                                            </form>
+                                        {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

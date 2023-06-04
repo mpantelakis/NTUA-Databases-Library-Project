@@ -1,0 +1,134 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container" id="row-container">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md-6">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Library Users</h4>
+                    <p class="card-text paragraph-custom">
+                       Here you can all the users in your library and approve new ones
+                    </p>
+                    <a class="btn btn-primary btn-submit-custom" href="/users">Show</a>
+                    <a class="btn btn-primary btn-submit-custom" href="/users/for_approval">Approve</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Library Books</h4>
+                    <p class="card-text paragraph-custom">
+                        Here you can see all the books in your library
+                    </p>
+                    <a class="btn btn-primary btn-submit-custom" href="/books">Show</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="row">
+        <div class="col-md-6">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Book Depository</h4>
+                    <p class="card-text paragraph-custom">
+                        Here you can see all the books that are currently registered in the Libraries Network, edit them or add a new one
+                    </p>
+                    <a class="btn btn-primary btn-submit-custom" href="/books/all">Show</a>
+                    <a class="btn btn-primary btn-submit-custom" href="/books/add">Add</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Library Reviews</h4>
+                    <p class="card-text paragraph-custom">
+                        Here you can see all the reviews submitted by users of your library and approve new ones
+                    </p>
+                    <a class="btn btn-primary btn-submit-custom" href="/reviews/library">Show</a>
+                    <a class="btn btn-primary btn-submit-custom" href="/reviews/library/for_approval">Approve</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row" id="row">
+        <div class="col-md-6">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Library Borrowings</h4>
+                    <p class="card-text paragraph-custom">
+                        Here you can see all the borrowings in your library, return a copy to the library and lend a copy
+                    </p>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a class="btn btn-primary btn-submit-custom" href="/borrowings/library">Show All</a>
+                        </div>
+                        <div class="col-md-4">
+                            <a class="btn btn-primary btn-submit-custom" href="/borrowings/delayed">Show Delayed</a>
+                        </div>
+                        <div class="col-md-4">
+                            <a class="btn btn-primary btn-submit-custom" href="/borrowings/lend">Lend</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>    
+        <div class="col-md-6">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Library Reservations</h4>
+                    <p class="card-text paragraph-custom">
+                        Here you can see all the reservations in your library and approve the active ones
+                    </p>
+                    <a class="btn btn-primary btn-submit-custom" href="/reservations/library">Show All</a>
+                    <a class="btn btn-primary btn-submit-custom" href="/reservations/active">Show Active</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="row">
+        <div class="col-md-6">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Library Users and Delayed Borrrowings</h4>
+                    <p class="card-text paragraph-custom">
+                        Here you can see all users who have in their possession at least one book and
+                        have delayed his return
+                    </p>
+                    <!-- <a class="btn btn-primary btn-submit-custom" href="/students">Show</a> -->
+                    <a class="btn btn-primary btn-submit-custom" href="/borrowings/users/delayed">Show</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Average Rating</h4>
+                    <p class="card-text paragraph-custom">
+                        Here you can see the average ratings per user and category
+                    </p>
+                    <!-- <a class="btn btn-primary btn-submit-custom" href="/grades">Show</a> -->
+                    <a class="btn btn-primary btn-submit-custom" href="/reviews/average">Show</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="row">
+        <div class="col-md-6">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Use Library</h4>
+                    <p class="card-text paragraph-custom">
+                       Use the Library as a professor
+                    </p>
+                    <!-- <a class="btn btn-primary btn-submit-custom" href="/grades">Show</a> -->
+                    <a class="btn btn-primary btn-submit-custom" href="/user/home_page">Use</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

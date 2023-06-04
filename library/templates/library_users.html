@@ -1,0 +1,160 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <div class="card" id="card-container">
+                <div class="card-body" id="card">
+                    <div class="row mb-3">
+                        <div class="col-md-9">
+                            <form action="/users/search" method="GET">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="search" placeholder="Search user's first and/or last name">
+                                    <button type="submit" class="btn btn-primary">Search</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    {% if users|length == 0 %}
+                        <!-- |length is a jinja2 filter that returns the amount of items in a sequence -->
+                        <h1 style="margin-top: 5rem;">No Users found!</h1>
+                    {% else %}
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Username</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Birth Date</th>
+                                        <th>Age</th>
+                                        <th>E-mail</th>
+                                        <th>Phone Number</th>
+                                        <th>Role</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user in users %}
+                                        <tr>
+                                            <td> {{ user.username}} </td>
+                                            <td> {{ user.first_name }} </td>
+                                            <td> {{ user.last_name }} </td>
+                                            <td> {{ user.birth_date }} </td>
+                                            <td> {{ user.age }} </td>
+                                            <td> {{ user.email }} </td>
+                                            <td> {{ user.phone_number }} </td>
+                                            <td> {{ user.role }} </td>
+                                            <td>
+                                            <div class="d-flex">
+                                            <button style = "all: unset; cursor: pointer;" type = "button"
+                                                    data-bs-toggle = "modal" data-bs-target = "#disableModal"
+                                                    data-username = "{{ user.username }}" onclick = "setModalFieldsDisable(this)">
+                                                    <i class="fa-solid fa-user-lock fa-xl"></i>
+                                            </button>
+                                            <button style = "all: unset; cursor: pointer;" type = "button"
+                                                    data-bs-toggle = "modal" data-bs-target = "#deleteModal"
+                                                    data-username = "{{ user.username }}" onclick = "setModalFieldsDelete(this)">
+                                                    <i class = "fa fa-trash fa-xl" style="margin-left: 10px;"></i>
+                                            </button>
+                                            <button style = "all: unset; cursor: pointer;" type = "button"
+                                            data-bs-toggle = "modal" data-bs-target = "#printModal"
+                                            data-username = "{{ user.username }}" onclick = "setModalFieldsPrint(this)">
+                                            <i class="fa-solid fa-print fa-xl" style="margin-left: 10px;"></i>
+                                            </button>
+
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class = "modal fade" id="deleteModal">
+    <div class = "modal-dialog">
+        <div class = "modal-content">
+            <div class = "modal-header">
+                <h5 class = "modal-title" id = "deleteModalLabel">Delete user</h5>
+                <button type = "button" class = "btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+            </div>
+            <div class = "modal-body">
+                Are you sure?
+            </div>
+            <div class = "modal-footer">
+                <button type = "button" class = "btn btn-secondary" data-bs-dismiss = "modal">Close</button>
+                <form id = "delete-modal-form">
+                    <input type = "submit" class = "btn btn-danger" value = "Delete">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class = "modal fade" id="disableModal">
+    <div class = "modal-dialog">
+        <div class = "modal-content">
+            <div class = "modal-header">
+                <h5 class = "modal-title" id = "disableModalLabel">Disable user</h5>
+                <button type = "button" class = "btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+            </div>
+            <div class = "modal-body">
+                Are you sure?
+            </div>
+            <div class = "modal-footer">
+                <button type = "button" class = "btn btn-secondary" data-bs-dismiss = "modal">Close</button>
+                <form id = "disable-modal-form">
+                    <input type = "submit" class = "btn btn-danger" value = "Disable">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class = "modal fade" id="printModal">
+    <div class = "modal-dialog">
+        <div class = "modal-content">
+            <div class = "modal-header">
+                <h5 class = "modal-title" id = "printModalLabel">Print user's library card</h5>
+                <button type = "button" class = "btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+            </div>
+            <div class = "modal-body">
+                Are you sure?
+            </div>
+            <div class = "modal-footer">
+                <button type = "button" class = "btn btn-secondary" data-bs-dismiss = "modal">Close</button>
+                <form id = "print-modal-form">
+                    <input type = "submit" class = "btn btn-danger" value = "Print">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function setModalFieldsDelete(row) {
+        document.getElementById("delete-modal-form").action = "/users/delete/" + row.getAttribute("data-username");
+        document.getElementById("delete-modal-form").method = "POST";
+    }
+</script>
+
+<script>
+
+    function setModalFieldsDisable(row) {
+        document.getElementById("disable-modal-form").action = "/users/disable/" + row.getAttribute("data-username");
+        document.getElementById("disable-modal-form").method = "POST";
+    }
+</script>
+
+<script>
+
+    function setModalFieldsPrint(row) {
+        document.getElementById("print-modal-form").action = "/users/print/" + row.getAttribute("data-username");
+    }
+</script>
+{% endblock content %}
