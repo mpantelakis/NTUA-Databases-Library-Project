@@ -1,0 +1,140 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container" id="row-container">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md-6">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Operators</h4>
+                    <p class="card-text paragraph-custom">
+                       Here you can all the library operators and approve new ones
+                    </p>
+                    <a class="btn btn-primary btn-submit-custom" href="/operators">Show</a>
+                    <a class="btn btn-primary btn-submit-custom" href="/operators/for_approval">Approve</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">School Units</h4>
+                    <p class="card-text paragraph-custom">
+                        Here you can see all the school units of the network and add new ones
+                    </p>
+                    <a class="btn btn-primary btn-submit-custom" href="/schools">Show</a>
+                    <a class="btn btn-primary btn-submit-custom" href="/schools/add">Add</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="row">
+        <div class="col-md-6">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Total Borrowings per School Unit</h4>
+                    <p class="card-text paragraph-custom">
+                        Here you can see a list of the total number of borrowings per school unit
+                    </p>
+                    <a class="btn btn-primary btn-submit-custom" href="/borrowings/schools">Show</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Operators and Borrowings
+                    </h4>
+                    <p class="card-text paragraph-custom">
+                        Here you can see all the operators who have loaned the same number of books in a year as
+                        more than 20 loans
+                    </p>
+                    <a class="btn btn-primary btn-submit-custom" href="/borrowings/operators">Show</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row" id="row">
+        <div class="col-md-6">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Book Authors and Borrowings</h4>
+                    <p class="card-text paragraph-custom">
+                        Here you can see all the authors whose books have not been borrowed
+                    </p>
+                    <a class="btn btn-primary btn-submit-custom" href="/borrowings/authors/not_borrowed">Show</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Book Authors and Books</h4>
+                    <p class="card-text paragraph-custom">
+                        Here you can see all the authors who have written at least 5 books less than the
+                        author with the most books.
+                    </p>
+                    <a class="btn btn-primary btn-submit-custom" href="/books/authors_5_less_than_max">Show</a>
+                </div>
+            </div>
+        </div>    
+
+    </div>
+    <div class="row" id="row">
+        <div class="col-md-6">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Book Categories and Borrowings</h4>
+                    <p class="card-text paragraph-custom">
+                        Here you can see the top 3 categories pairs that appeared in borrowings.
+                    </p>
+                    <a class="btn btn-primary btn-submit-custom" href="/categories/top3">Show</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Specific Book Category</h4>
+                    <p class="card-text paragraph-custom">
+                        Here you can see which authors belong to a specific book category and which professors have borrowed books of this category in the last year
+                    </p>
+                    <a class="btn btn-primary btn-submit-custom" href="/categories/authors">Authors</a>
+                    <a class="btn btn-primary btn-submit-custom" href="/categories/professors">Professors</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="row">
+        <div class="col-md-6">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Young Professors and Borrowings</h4>
+                    <p class="card-text paragraph-custom">
+                        Here you can see all the young teachers under 40 years old who have borrowed the most
+                        books as well as the number of books.
+                    </p>
+                    <a class="btn btn-primary btn-submit-custom" href="/borrowings/young_professors">Show</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Backup and Restore</h4>
+                    <p class="card-text paragraph-custom">
+                        Here you can backup the entire library network and restore from the most recent backup
+                    </p>
+                    <a class="btn btn-primary btn-submit-custom" href="/backup">Backup</a>
+                    <form method="post" action="/restore" enctype="multipart/form-data">
+                        <input type="file" name="backup_file">
+                        <button type="submit" class="btn btn-primary btn-submit-custom" style="margin-top: 10px;">Restore</button>
+                      </form>                      
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+</div>
+{% endblock content %}
