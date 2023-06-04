@@ -1,0 +1,32 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <div class="card" id="card-container">
+                <div class="card-body" id="card">
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <!-- <img src="https://www.treasurehunt.gr/7/images/books/book_9.jpg" alt="Book Image" class="img-fluid"> -->
+                            <img src="{{ book[0].image }}" alt="Book Image" class="img-fluid">
+                        </div>
+                        <div class="col-md-8">
+                            <h2>{{ book[0].title }}</h2>
+                            <p><strong>ISBN:</strong> {{ book[0].ISBN }}</p>
+                            <p><strong>Authors:</strong> {{ book[0].authors }}</p>
+                            <p><strong>Publisher:</strong> {{ book[0].publisher }}</p>
+                            <p><strong>Number of Pages:</strong> {{ book[0].num_of_pages }}</p>
+                            <h5>Abstract:</h5>
+                            <p>{{ book[0].abstract }}</p>
+                            <p><strong>Language:</strong> {{ book[0].language }}</p>
+                            <p><strong>Categories:</strong> {{ book[0].categories }}</p>
+                            <p><strong>Keywords:</strong> {{ book[0].key_words }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

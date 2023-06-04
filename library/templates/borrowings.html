@@ -1,0 +1,76 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <div class="card" id="card-container">
+                <div class="card-body" id="card">
+                    <div class="row mb-3">
+                        <div class="col-md-9">
+                            {% if condition=="operator" and condition1=="all" %}
+                            <form action="/borrowings/search" method="GET">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="search" placeholder="Search Copy ID">
+                                    <button type="submit" class="btn btn-primary">Search</button>
+                                </div>
+                            </form>
+                            {% elif condition=="operator" and condition1=="delayed" %}
+                            <form action="/borrowings/search/delayed" method="GET">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="search" placeholder="Search Copy ID">
+                                    <button type="submit" class="btn btn-primary">Search</button>
+                                </div>
+                            </form>
+                            {%endif%}
+                        </div>
+                    </div>
+                {% if borrowings|length == 0 %}
+                    <!-- |length is a jinja2 filter that returns the amount of items in a sequence -->
+                    <h1 style="margin-top: 5rem;">No Borrowings found!</h1>
+                {% else %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Username</th>
+                                    <th>Title</th>
+                                    <th>Copy ID</th>
+                                    <th>Borrowing Date</th>
+                                    <th>Due Return Date</th>
+                                    <th>State</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for borrowing in borrowings %}
+                                    <tr>
+                                        <td> {{ borrowing.borrowing_id}} </td>
+                                        <td> {{ borrowing.username}} </td>
+                                        <td> {{ borrowing.title}} </td>
+                                        <td> {{ borrowing.copy_id}} </td>
+                                        <td> {{ borrowing.borrowing_date }} </td>
+                                        <td> {{ borrowing.due_return_date }} </td>
+                                        <td> {{ borrowing.state }} </td>
+                                        <td>
+                                            {% if condition == "operator" and borrowing.state=="Pending return" %}
+                                            <form action="/borrowing/return" method="POST">
+                                                <input type="hidden" name="borrowing_id" value="{{  borrowing.borrowing_id }}">
+                                                <button type="submit" class="btn btn-primary">Return</button>
+                                            </form>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

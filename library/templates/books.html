@@ -1,0 +1,119 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <div class="card" id="card-container">
+                <div class="card-body" id="card">
+                    <div class="row mb-3">
+                        <div class="col-md-9">
+                            {% if condition1=="all" %}
+                            <form action="/books/search/all" method="GET">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="search" placeholder="Search title, author's first/last name, category, keyword">
+                                    <button type="submit" class="btn btn-primary">Search</button>
+                                </div>
+                            </form>
+                            {% else %}
+                            <form action="/books/search" method="GET">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="search" placeholder="Search title, author's first/last name, category, keyword,Copy ID">
+                                    <button type="submit" class="btn btn-primary">Search</button>
+                                </div>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if books|length == 0 %}
+                        <!-- |length is a jinja2 filter that returns the amount of items in a sequence -->
+                        <h1 style="margin-top: 5rem;">No Books found!</h1>
+                    {% else %}
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>ISBN</th>
+                                        <th>Title</th>
+                                        <th>Authors</th>
+                                        <th>Categories</th>
+                                        <th>Keywords</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for book in books %}
+                                        <tr>
+                                            <td> {{ book.ISBN }} </td>
+                                            <td> {{ book.title }} </td>
+                                            <td> {{ book.authors }} </td>
+                                            <td> {{ book.categories }} </td>
+                                            <td> {{ book.key_words }} </td>
+                                            <td>
+                                                {% if condition1 == "operator" %}
+                                                <div class="d-flex">
+                                                    <form action="/book/page" method="GET" class="mr-2">
+                                                        <input type="hidden" name="book_isbn" value="{{ book.ISBN }}">
+                                                        <button type="submit" class="btn btn-primary">View Details</button>
+                                                    </form>
+                                                    <form action="/copies" method="GET">
+                                                        <input type="hidden" name="book_isbn" value="{{ book.ISBN }}">
+                                                        <button type="submit" class="btn btn-primary" style="margin-left: 5px;">View Copies</button>
+                                                    </form>
+                                                    <form action="/review/create" method="GET">
+                                                        <input type="hidden" name="book_isbn" value="{{ book.ISBN }}">
+                                                        <button type="submit" class="btn btn-primary" style="margin-left: 5px;">Add Review</button>
+                                                    </form> 
+                                                    <form action="/reviews/show" method="GET">
+                                                        <input type="hidden" name="book_isbn" value="{{ book.ISBN }}">
+                                                        <button type="submit" class="btn btn-primary" style="margin-left: 5px;">Show Reviews</button>
+                                                    </form> 
+                                                    <form action="/copies/add" method="POST">
+                                                        <input type="hidden" name="book_isbn" value="{{ book.ISBN }}">
+                                                        <button type="submit" class="btn btn-secondary" style="margin-left: 5px;">Add Copy</button>
+                                                    </form>
+                                                    <form action="/book/delete" method="POST">
+                                                        <input type="hidden" name="book_isbn" value="{{ book.ISBN }}">
+                                                        <button type="submit" class="btn btn-secondary" style="margin-left: 5px;">Delete Book</button>
+                                                    </form>
+                                                {% elif condition1=="all" %}
+                                                    <div class="d-flex">
+                                                        <form action="/book/page" method="GET" class="mr-2">
+                                                            <input type="hidden" name="book_isbn" value="{{ book.ISBN }}">
+                                                            <button type="submit" class="btn btn-primary">View Details</button>
+                                                        </form>
+                                                        <form action="/books/addi" method="POST">
+                                                            <input type="hidden" name="book_isbn" value="{{ book.ISBN }}">
+                                                            <button type="submit" class="btn btn-primary" style="margin-left: 5px;">Add to School</button>
+                                                        </form>
+                                                {% else %}
+                                                <div class="d-flex">
+                                                    <form action="/book/page" method="GET" class="mr-2">
+                                                        <input type="hidden" name="book_isbn" value="{{ book.ISBN }}">
+                                                        <button type="submit" class="btn btn-primary">View Details</button>
+                                                    </form>
+                                                    <form action="/copies" method="GET">
+                                                        <input type="hidden" name="book_isbn" value="{{ book.ISBN }}">
+                                                        <button type="submit" class="btn btn-primary" style="margin-left: 5px;">Choose Copy</button>
+                                                    </form>
+                                                    <form action="/reviews/show" method="GET">
+                                                        <input type="hidden" name="book_isbn" value="{{ book.ISBN }}">
+                                                        <button type="submit" class="btn btn-primary" style="margin-left: 5px;">Show Reviews</button>
+                                                    </form>  
+                                                    <form action="/review/create" method="GET">
+                                                        <input type="hidden" name="book_isbn" value="{{ book.ISBN }}">
+                                                        <button type="submit" class="btn btn-primary" style="margin-left: 5px;">Add Review</button>
+                                                    </form> 
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
