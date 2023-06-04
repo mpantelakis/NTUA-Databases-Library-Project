@@ -1,0 +1,171 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <div class="card" id="card-container">
+                <div class="card-body" id="card">
+                    {% if information|length == 0 %}
+                        <!-- |length is a jinja2 filter that returns the amount of items in a sequence -->
+                        <h1 style="margin-top: 5rem;">No Users found!</h1>
+                    {% else %}
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Username</th>
+                                        <th>Password</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Birth Date</th>
+                                        <th>Age</th>
+                                        <th>E-mail</th>
+                                        <th>Phone Number</th>
+                                        <th>School</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user in information %}
+                                        <tr>
+                                            <td> {{ user.username}} </td>
+                                            <td> {{ user.password}} </td>
+                                            <td> {{ user.first_name }} </td>
+                                            <td> {{ user.last_name }} </td>
+                                            <td> {{ user.birth_date }} </td>
+                                            <td> {{ user.age }} </td>
+                                            <td> {{ user.email }} </td>
+                                            <td> {{ user.phone_number }} </td>
+                                            <td> {{ user.school_name }} </td>
+                                            <td>
+                                            {% if condition == "student" %}
+                                                <button style = "all: unset; cursor: pointer;" type = "button"
+                                                    data-bs-toggle = "modal" data-bs-target = "#passwordModal"
+                                                    data-username = "{{ user.username }}"  data-password = "{{ user.password }}"
+                                                    onclick = "setModalFieldsPassword(this)">
+                                                    <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                                                </button>
+                                            {% else %}
+                                                <button style="all: unset; cursor: pointer;" type="button"
+                                                    data-bs-toggle="modal" data-bs-target="#editModal"
+                                                    data-username="{{ user.username }}"
+                                                    data-password="{{ user.password }}"
+                                                    data-first-name="{{ user.first_name }}"
+                                                    data-last-name="{{ user.last_name }}"
+                                                    data-birth-date="{{ user.birth_date }}"
+                                                    data-email="{{ user.email }}"
+                                                    data-phone-number="{{ user.phone_number }}"
+                                                    onclick="setModalFieldsEdit(this)">
+                                                    <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                                                </button>
+                                            {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit Account</h5>
+            </div>
+            <form id="edit-modal-form" method="POST">
+                <!-- Add form fields or other content here -->
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="newPassword">New Password</label>
+                        <input type="password" class="form-control" id="newPassword" name="new_password" placeholder="Enter new password">
+                    </div>
+                    <div class="form-group">
+                        <label for="newFirstName">First Name</label>
+                        <input type="text" class="form-control" id="newFirstName" name="new_first_name" placeholder="Enter new first name">
+                    </div>
+                    <div class="form-group">
+                        <label for="newLastName">Last Name</label>
+                        <input type="text" class="form-control" id="newLastName" name="new_last_name" placeholder="Enter new last name">
+                    </div>
+                    <div class="form-group">
+                        <label for="newBirthDate">Birth Date</label>
+                        <input type="date" class="form-control" id="newBirthDate" name="new_birth_date">
+                    </div>
+                    <div class="form-group">
+                        <label for="newEmail">Email</label>
+                        <input type="email" class="form-control" id="newEmail" name="new_email" placeholder="Enter new email">
+                    </div>
+                    <div class="form-group">
+                        <label for="newPhoneNumber">Phone Number</label>
+                        <input type="text" class="form-control" id="newPhoneNumber" name="new_phone_number" placeholder="Enter new phone number">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="passwordModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="passwordModalLabel">Change Password</h5>
+            </div>
+            <form id="password-modal-form" method="POST">
+                <!-- Add form fields or other content here -->
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="newPassword">New Password</label>
+                        <input type="password" class="form-control" id="newPassword" name="new_password" placeholder="Enter new password">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type = "button" class = "btn btn-secondary" data-bs-dismiss = "modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function setModalFieldsEdit(button) {
+        var username = button.getAttribute("data-username");
+        var password = button.getAttribute("data-password");
+        var firstName = button.getAttribute("data-first-name");
+        var lastName = button.getAttribute("data-last-name");
+        var birthDate = button.getAttribute("data-birth-date");
+        var email = button.getAttribute("data-email");
+        var phoneNumber = button.getAttribute("data-phone-number");
+        
+        document.getElementById("edit-modal-form").action = "/users/edit/" + username + "/" + password;
+        document.getElementById("edit-modal-form").method = "POST";
+        document.getElementById("newPassword").value = password;
+        document.getElementById("newFirstName").value = firstName;
+        document.getElementById("newLastName").value = lastName;
+        document.getElementById("newBirthDate").value = birthDate;
+        document.getElementById("newEmail").value = email;
+        document.getElementById("newPhoneNumber").value = phoneNumber;
+    }
+
+    function setModalFieldsPassword(button) {
+        var username = button.getAttribute("data-username");
+        document.getElementById("password-modal-form").action = "/users/change_password/" + username;
+        document.getElementById("password-modal-form").method = "POST";
+    }
+
+</script>
+
+{% endblock content %}
