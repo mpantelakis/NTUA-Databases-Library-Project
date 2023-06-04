@@ -1,0 +1,42 @@
+{% extends "global_layout.html" %}
+
+{% block content %}
+<div class="container">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <div class="card" id="card-container">
+                <div class="card-body" id="card">                    
+                    {% if operators|length == 0 %}
+                        <!-- |length is a Jinja2 filter that returns the number of items in a sequence -->
+                        <h1 style="margin-top: 5rem;">No categories Found</h1>
+                    {% else %}
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Total Borrowings</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for operator in operators %}
+                                        <tr>
+                                            <td>{{ operator.first_name }}</td>
+                                            <td>{{ operator.last_name }}</td>
+                                            <td> {{ operator.total_borrowings}}</td>
+                                            <td></td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

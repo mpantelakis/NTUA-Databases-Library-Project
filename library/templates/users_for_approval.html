@@ -1,0 +1,117 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <div class="card" id="card-container">
+                <div class="card-body" id="card">
+                    {% if users|length == 0 %}
+                        <!-- |length is a jinja2 filter that returns the amount of items in a sequence -->
+                        <h1 style="margin-top: 5rem;">No Users found!</h1>
+                    {% else %}
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Username</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Birth Date</th>
+                                        <th>Age</th>
+                                        <th>E-mail</th>
+                                        <th>Phone Number</th>
+                                        <th>Role</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user in users %}
+                                        <tr>
+                                            <td> {{ user.username}} </td>
+                                            <td> {{ user.first_name }} </td>
+                                            <td> {{ user.last_name }} </td>
+                                            <td> {{ user.birth_date }} </td>
+                                            <td> {{ user.age }} </td>
+                                            <td> {{ user.email }} </td>
+                                            <td> {{ user.phone_number }} </td>
+                                            <td> {{ user.role }} </td>
+                                            <td>
+                                            <div class="d-flex">
+                                            <button style = "all: unset; cursor: pointer;" type = "button"
+                                                data-bs-toggle = "modal" data-bs-target = "#approveModal"
+                                                data-id = "{{ user.username }}" onclick = "setModalFieldsApprove(this)">
+                                                <i class="fa-solid fa-check fa-xl"></i>
+                                            </button>
+                                            <button style = "all: unset; cursor: pointer;" type = "button"
+                                                data-bs-toggle = "modal" data-bs-target = "#disapproveModal"
+                                                data-id = "{{ user.username }}" onclick = "setModalFieldsDisapprove(this)">
+                                                <i class="fa-solid fa-xmark fa-xl" style="margin-left: 8px;"></i>
+                                            </button>
+
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class = "modal fade" id="disapproveModal">
+    <div class = "modal-dialog">
+        <div class = "modal-content">
+            <div class = "modal-header">
+                <h5 class = "modal-title" id = "disapproveModalLabel">Dissaprove user</h5>
+                <button type = "button" class = "btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+            </div>
+            <div class = "modal-body">
+                Are you sure?
+            </div>
+            <div class = "modal-footer">
+                <button type = "button" class = "btn btn-secondary" data-bs-dismiss = "modal">Close</button>
+                <form id = "disapprove-modal-form">
+                    <input type = "submit" class = "btn btn-danger" value = "Dissaprove">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class = "modal fade" id="approveModal">
+    <div class = "modal-dialog">
+        <div class = "modal-content">
+            <div class = "modal-header">
+                <h5 class = "modal-title" id = "approveModalLabel">Approve user</h5>
+                <button type = "button" class = "btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+            </div>
+            <div class = "modal-body">
+                Are you sure?
+            </div>
+            <div class = "modal-footer">
+                <button type = "button" class = "btn btn-secondary" data-bs-dismiss = "modal">Close</button>
+                <form id = "approve-modal-form">
+                    <input type = "submit" class = "btn btn-danger" value = "Approve">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function setModalFieldsDisapprove(row) {
+        document.getElementById("disapprove-modal-form").action = "/users/disapprove/" + row.getAttribute("data-id");
+        document.getElementById("disapprove-modal-form").method = "POST";
+    }
+</script>
+
+<script>
+    function setModalFieldsApprove(row) {
+        document.getElementById("approve-modal-form").action = "/users/approve/" + row.getAttribute("data-id");
+        document.getElementById("approve-modal-form").method = "POST";
+    }
+</script>
+{% endblock content %}

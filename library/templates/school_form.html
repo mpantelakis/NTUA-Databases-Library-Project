@@ -1,0 +1,138 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <form class="form-horizontal" name="school-form" method="POST">
+                <!-- hidden_tag returns the form's security metadata -->
+                {{ form.hidden_tag() }}
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.name.label(class="form-label") }}
+                    {{ form.name(class="form-control", placeholder="Enter school's name", required=False) }}
+                    {% if form.name.errors %}
+                    <ul class="errors">
+                        {% for error in form.name.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.street_name.label(class="form-label") }}
+                    {{ form.street_name(class="form-control", placeholder="Enter street name", required=False) }}
+                    {% if form.street_name.errors %}
+                    <ul class="errors">
+                        {% for error in form.street_name.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.street_number.label(class="form-label") }}
+                    {{ form.street_number(class="form-control", placeholder="Enter street number", required=False) }}
+                    {% if form.street_number.errors %}
+                    <ul class="errors">
+                        {% for error in form.street_number.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.city.label(class="form-label") }}
+                    {{ form.city(class="form-control", placeholder="Enter city", required=False) }}
+                    {% if form.city.errors %}
+                    <ul class="errors">
+                        {% for error in form.city.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.zip_code.label(class="form-label") }}
+                    {{ form.zip_code(class="form-control", placeholder="Enter zip code", required=False) }}
+                    {% if form.zip_code.errors %}
+                    <ul class="errors">
+                        {% for error in form.zip_code.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.phone_number.label(class="form-label") }}
+                    {{ form.phone_number(class="form-control", placeholder="Enter phone number", required=False) }}
+                    {% if form.phone_number.errors %}
+                    <ul class="errors">
+                        {% for error in form.phone_number.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.email.label(class="form-label") }}
+                    {{ form.email(class="form-control", placeholder="Enter email", required=False) }}
+                    {% if form.email.errors %}
+                    <ul class="errors">
+                        {% for error in form.email.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.director_first_name.label(class="form-label") }}
+                    {{ form.director_first_name(class="form-control", placeholder="Enter director's first name", required=False) }}
+                    {% if form.director_first_name.errors %}
+                    <ul class="errors">
+                        {% for error in form.director_first_name.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.director_last_name.label(class="form-label") }}
+                    {{ form.director_last_name(class="form-control", placeholder="Enter director's last name", required=False) }}
+                    {% if form.director_last_name.errors %}
+                    <ul class="errors">
+                        {% for error in form.director_last_name.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.library_operator_first_name.label(class="form-label") }}
+                    {{ form.library_operator_first_name(class="form-control", placeholder="Enter library operator's first name", required=False) }}
+                    {% if form.library_operator_first_name.errors %}
+                    <ul class="errors">
+                        {% for error in form.library_operator_first_name.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.library_operator_last_name.label(class="form-label") }}
+                    {{ form.library_operator_last_name(class="form-control", placeholder="Enter library operator's last name", required=False) }}
+                    {% if form.library_operator_last_name.errors %}
+                    <ul class="errors">
+                        {% for error in form.library_operator_last_name.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                {{ form.submit(class="btn btn-primary btn-submit-custom") }}
+            </form>
+            <br>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

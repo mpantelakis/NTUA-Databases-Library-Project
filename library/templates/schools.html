@@ -1,0 +1,164 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <div class="card" id="card-container">
+                <div class="card-body" id="card">
+                    {% if schools|length == 0 %}
+                        <!-- |length is a jinja2 filter that returns the amount of items in a sequence -->
+                        <h1 style="margin-top: 5rem;">No Schools found!</h1>
+                    {% else %}
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>School's Name</th>
+                                        <th>Street Name</th>
+                                        <th>Street Number</th>
+                                        <th>City</th>
+                                        <th>Zip Code</th>
+                                        <th>Phone Number</th>
+                                        <th>E-mail</th>
+                                        <th>Director's First Name</th>
+                                        <th>Director's Last Name</th>
+                                        <th>Library Operator's First Name</th>
+                                        <th>Library Operator's Last Name</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for school in schools %}
+                                        <tr>
+                                            <td> {{ school.school_name}} </td>
+                                            <td> {{ school.street_name}} </td>
+                                            <td> {{ school.street_number }} </td>
+                                            <td> {{ school.city }} </td>
+                                            <td> {{ school.zip_code }} </td>
+                                            <td> {{ school.phone_number }} </td>
+                                            <td> {{ school.email }} </td>
+                                            <td> {{ school.director_first_name }} </td>
+                                            <td> {{ school.director_last_name }} </td>
+                                            <td> {{ school.lib_operator_first_name }} </td>
+                                            <td> {{ school.lib_operator_last_name }} </td>
+                                            <td>
+                                                <button style="all: unset; cursor: pointer;" type="button" data-bs-toggle="modal" data-bs-target="#editModal"
+                                                data-school-name="{{ school.school_name }}"
+                                                data-street-name="{{ school.street_name }}"
+                                                data-street-number="{{ school.street_number }}"
+                                                data-city="{{ school.city }}"
+                                                data-zip-code="{{ school.zip_code }}"
+                                                data-phone-number="{{ school.phone_number }}"
+                                                data-email="{{ school.email }}"
+                                                data-director-first-name="{{ school.director_first_name }}"
+                                                data-director-last-name="{{ school.director_last_name }}"
+                                                data-library-operator-first-name="{{ school.lib_operator_first_name }}"
+                                                data-library-operator-last-name="{{ school.lib_operator_last_name }}"
+                                                onclick="setModalFieldsEdit(this)">
+                                            <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                                        </button>
+                                        
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit School</h5>
+            </div>
+            <form id="edit-modal-form" method="POST">
+                <!-- Add form fields or other content here -->
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="newStreetName">Street Name</label>
+                        <input type="text" class="form-control" id="newStreetName" name="new_street_name" placeholder="Enter new street name">
+                    </div>
+                    <div class="form-group">
+                        <label for="newStreetNumber">Street Number</label>
+                        <input type="text" class="form-control" id="newStreetNumber" name="new_street_number" placeholder="Enter new street number">
+                    </div>
+                    <div class="form-group">
+                        <label for="newCity">City</label>
+                        <input type="text" class="form-control" id="newCity" name="new_city" placeholder="Enter new city">
+                    </div>
+                    <div class="form-group">
+                        <label for="newZipCode">Zip Code</label>
+                        <input type="text" class="form-control" id="newZipCode" name="new_zip_code" placeholder="Enter new zip code">
+                    </div>
+                    <div class="form-group">
+                        <label for="newPhoneNumber">Phone Number</label>
+                        <input type="text" class="form-control" id="newPhoneNumber" name="new_phone_number" placeholder="Enter new phone number">
+                    </div>
+                    <div class="form-group">
+                        <label for="newEmail">Email</label>
+                        <input type="email" class="form-control" id="newEmail" name="new_email" placeholder="Enter new email">
+                    </div>
+                    <div class="form-group">
+                        <label for="newDirectorFirstName">Director's First Name</label>
+                        <input type="text" class="form-control" id="newDirectorFirstName" name="new_director_first_name" placeholder="Enter new director's first name">
+                    </div>
+                    <div class="form-group">
+                        <label for="newDirectorLastName">Director's Last Name</label>
+                        <input type="text" class="form-control" id="newDirectorLastName" name="new_director_last_name" placeholder="Enter new director's last name">
+                    </div>
+                    <div class="form-group">
+                        <label for="newLibraryOperatorFirstName">Library Operator's First Name</label>
+                        <input type="text" class="form-control" id="newLibraryOperatorFirstName" name="new_library_operator_first_name" placeholder="Enter new library operator's first name">
+                    </div>
+                    <div class="form-group">
+                        <label for="newLibraryOperatorLastName">Library Operator's Last Name</label>
+                        <input type="text" class="form-control" id="newLibraryOperatorLastName" name="new_library_operator_last_name" placeholder="Enter new library operator's last name">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function setModalFieldsEdit(button) {
+        var schoolName = button.getAttribute("data-school-name");
+        var streetName = button.getAttribute("data-street-name");
+        var streetNumber = button.getAttribute("data-street-number");
+        var city = button.getAttribute("data-city");
+        var zipCode = button.getAttribute("data-zip-code");
+        var phoneNumber = button.getAttribute("data-phone-number");
+        var email = button.getAttribute("data-email");
+        var directorFirstName = button.getAttribute("data-director-first-name");
+        var directorLastName = button.getAttribute("data-director-last-name");
+        var libraryOperatorFirstName = button.getAttribute("data-library-operator-first-name");
+        var libraryOperatorLastName = button.getAttribute("data-library-operator-last-name");
+        
+        document.getElementById("edit-modal-form").action = "/schools/edit/" + schoolName;
+        document.getElementById("edit-modal-form").method = "POST";
+        document.getElementById("newStreetName").value = streetName;
+        document.getElementById("newStreetNumber").value = streetNumber;
+        document.getElementById("newCity").value = city;
+        document.getElementById("newZipCode").value = zipCode;
+        document.getElementById("newPhoneNumber").value = phoneNumber;
+        document.getElementById("newEmail").value = email;
+        document.getElementById("newDirectorFirstName").value = directorFirstName;
+        document.getElementById("newDirectorLastName").value = directorLastName;
+        document.getElementById("newLibraryOperatorFirstName").value = libraryOperatorFirstName;
+        document.getElementById("newLibraryOperatorLastName").value = libraryOperatorLastName;
+    }
+</script>
+
+
+{% endblock content %}

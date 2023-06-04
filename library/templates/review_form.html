@@ -1,0 +1,59 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <form class="form-horizontal" name="review-form" method="POST">
+                <!-- hidden_tag returns the form's security metadata -->
+                {{ form.hidden_tag() }}
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.rating.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.rating(class = "form-select", required = False) }}
+                    {% if form.rating.errors %}
+                    <ul class="errors">
+                        {% for error in form.rating.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.review_text.label(class="form-label") }}
+                    {{ form.review_text(class="form-control", style="height: 300px; width: 800px;", placeholder="Here you can write your review. Up to 200 characters.", required=False) }}
+                    <small id="charCount" class="form-text text-muted">
+                        <span id="currentCount">0</span>/<span id="maxCount">200</span> characters
+                    </small>
+                    {% if form.review_text.errors %}
+                    <ul class="errors">
+                        {% for error in form.review_text.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                {{ form.submit(class="btn btn-primary btn-submit-custom") }}
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // JavaScript code to count the number of characters in the review text field
+    var reviewText = document.getElementById('review_text');
+    var currentCount = document.getElementById('currentCount');
+    var maxCount = document.getElementById('maxCount');
+
+    reviewText.addEventListener('input', function () {
+        var count = reviewText.value.length;
+        currentCount.textContent = count;
+        if (count > 200) {
+            currentCount.classList.add('text-danger');
+        } else {
+            currentCount.classList.remove('text-danger');
+        }
+    });
+</script>
+
+{% endblock content %}

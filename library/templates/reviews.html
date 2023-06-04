@@ -1,0 +1,81 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <div class="card" id="card-container">
+                <div class="card-body" id="card">
+                {% if reviews|length == 0 %}
+                    <!-- |length is a jinja2 filter that returns the amount of items in a sequence -->
+                    <h1 style="margin-top: 5rem;">No Reviews found!</h1>
+                {% else %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    {% if condition1 == "book_reviews" %}
+                                        <th> Username </th>
+                                    {% elif condition1 == "operator" %}
+                                        <th> ID </th>
+                                        <th> Username </th>
+                                    {% else %}
+                                        <th> ID </th>
+                                    {% endif %}
+                                    <th>ISBN</th>
+                                    <th>Book Title</th>
+                                    <th>Rating</th>
+                                    <th>Text</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for review in reviews %}
+                                    <tr>
+                                        {% if condition1 == "book_reviews" %}
+                                            <td> {{review.username}} </td>
+                                        {% elif condition1 == "operator" %}
+                                            <td> {{review.review_id}} </td>
+                                            <td> {{review.username}} </td>
+                                        {% else %}
+                                            <td> {{review.review_id}} </td>
+                                        {% endif %}
+                                        <td> {{ review.ISBN }} </td>
+                                        <td> {{ review.title }} </td>
+                                        <td>
+                                            {% if review.Likert == 1 %}
+                                                <span style="font-size: 25px;">&#9733;&#9734;&#9734;&#9734;&#9734;</span>
+                                            {% elif review.Likert == 2 %}
+                                                <span style="font-size: 25px;">&#9733;&#9733;&#9734;&#9734;&#9734;</span>
+                                            {% elif review.Likert == 3 %}
+                                                <span style="font-size: 25px;">&#9733;&#9733;&#9733;&#9734;&#9734;</span>
+                                            {% elif review.Likert == 4 %}
+                                                <span style="font-size: 25px;">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+                                            {% elif review.Likert == 5 %}
+                                                <span style="font-size: 25px;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                                            {% endif %}
+                                        </td>
+                                        <td> {{ review.review_text }} </td>
+                                        {% if condition1 == "book_reviews" %}
+                                            <td></td>
+                                        {% else %}
+                                            <td>
+                                                <form action="/reviews/delete" method="POST">
+                                                    <input type="hidden" name="review-id" value="{{ review.review_id  }}">
+                                                    <button type="submit" class="btn btn-primary">Delete</button>
+                                                </form>
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

@@ -1,0 +1,76 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <div class="card" id="card-container">
+                <div class="card-body" id="card">
+                    <div class="row mb-3">
+                        <div class="col-md-9">
+                            {% if condition=="operator" %}
+                            <form action="/reservations/search" method="GET">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="search" placeholder="Search Copy ID">
+                                    <button type="submit" class="btn btn-primary">Search</button>
+                                </div>
+                            </form>
+                            {%endif%}
+                        </div>
+                    </div>
+                {% if reservations|length == 0 %}
+                    <!-- |length is a jinja2 filter that returns the amount of items in a sequence -->
+                    <h1 style="margin-top: 5rem;">No Reservations found!</h1>
+                {% else %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Title</th>
+                                    <th>Copy ID</th>
+                                    <th>Reservation Date</th>
+                                    <th>Cancellation Date</th>
+                                    <th>State</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for reservation in reservations %}
+                                    <tr>
+                                        <td> {{ reservation.reservation_id}} </td>
+                                        <td> {{ reservation.title}} </td>
+                                        <td> {{ reservation.copy_id}} </td>
+                                        <td> {{ reservation.reservation_date }} </td>
+                                        <td> {{ reservation.cancellation_date }} </td>
+                                        <td> {{ reservation.state }} </td>
+                                        {% if reservation.cancellation_date==None and condition1=="cancel"%}
+                                            <td>
+                                                <form action="/reservations/cancel" method="POST">
+                                                    <input type="hidden" name="reservation_id" value="{{ reservation.reservation_id }}">
+                                                    <button type="submit" class="btn btn-primary">Cancel</button>
+                                                </form>
+                                            </td>
+                                        {% elif reservation.cancellation_date==None and condition1=="active"%}
+                                        <td>
+                                            <form action="/reservations/approve" method="POST">
+                                                <input type="hidden" name="reservation_id" value="{{ reservation.reservation_id }}">
+                                                <button type="submit" class="btn btn-primary">Approve</button>
+                                            </form>
+                                        </td>
+                                        {%else%}
+                                            <td></td>
+                                        {%endif%}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
