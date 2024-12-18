@@ -1,6 +1,6 @@
 # **DBMS Semester Project - Spring 2023**
 
-This project involves creating a system to store and manage all the necessary information for operating a **School Library** in a network of **Public Schools**. The system includes both **front-end** and **back-end** components.
+This project involves creating a system to store and manage all the necessary information for operating a **School Library** in a network of **Public Schools**. The system includes both **front-end** and **back-end** components. It was co-developed with [Enrica-Iliana Maggiori](https://github.com/ilianamaggiori).
 
 ---
 
@@ -53,3 +53,4 @@ You should see the home page of the application.
 - **Back-end:** MySQL, Python (Flask)
 - **Front-end:** HTML, CSS
 - **Database Management Tools:** MySQL Workbench, MySQL Server
+
